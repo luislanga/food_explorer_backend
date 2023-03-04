@@ -17,6 +17,11 @@ class UsersController {
             await connection('users').insert({name, email, password: hashedPassword, is_admin})
             return res.status(201).json() 
     }
+
+    async index(req, res){
+        const userList = await connection('users').orderBy('created_at', 'desc')
+        return res.json(userList)
+    }
 }
 
 module.exports = UsersController
