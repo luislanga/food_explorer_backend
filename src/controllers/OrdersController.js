@@ -5,7 +5,7 @@ const knex = require('knex')(knexfile.development);
 
 class OrdersController {
     async create(req, res) {
-        const {user_id} = req.params
+        const user_id = req.user.id
         const {orderDishes} = req.body
         
         await connection('orders').insert({user_id})
@@ -28,7 +28,7 @@ class OrdersController {
     }
     
     async update(req, res) {
-        const {user_id} = req.params
+        const user_id = req.user.id
         const {order_id, status} = req.body
         const date = knex.fn.now();
         const currentUser = await connection('users').where({id: user_id}).first()
@@ -41,8 +41,8 @@ class OrdersController {
         }
     }
 
-    async index(req, res) {
-        const {user_id} = req.params    
+    async index(req, res) { 
+        const user_id = req.user.id    
         const currentUser = await connection('users').where({id: user_id}).first()
 
         if(currentUser.is_admin === 1){
