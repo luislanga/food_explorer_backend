@@ -46,12 +46,51 @@ class OrdersController {
         const currentUser = await connection('users').where({id: user_id}).first()
 
         if(currentUser.is_admin === 1){
-            const orderList = await connection('orders').orderBy('created_at', 'desc')
-            return res.json(orderList)
+            const customerOrders = await connection('orders').orderBy('created_at', 'desc')
+            const orderItems = await connection('order_items')
+            const orderWithItems = customerOrders.map(order => {
+                order = 
+                {...order, orderDishes:{
+                    dishes: [],
+                    quantities: [] 
+                    }
+                } 
+                for (let i = 0; i < orderItems.length; i++) {
+                    if(order.id === orderItems[i].order_id){
+                        order = 
+                            {...order, orderDishes:{
+                                dishes: [...order.orderDishes.dishes, orderItems[i].dish_id],
+                                quantities: [ ...order.orderDishes.quantities, orderItems[i].quantity] 
+                                }
+                            } 
+                    }                    
+                }
+                return order
+            })
+            return res.json(orderWithItems)
         }else {
             const customerOrders = await connection('orders').where({user_id}).orderBy('created_at', 'desc')
-            console.log(customerOrders)
-            return res.json(customerOrders)
+            const orderItems = await connection('order_items')
+            const orderWithItems = customerOrders.map(order => {
+                order = 
+                {...order, orderDishes:{
+                    dishes: [],
+                    quantities: [] 
+                    }
+                } 
+                for (let i = 0; i < orderItems.length; i++) {
+                    if(order.id === orderItems[i].order_id){
+                        order = 
+                            {...order, orderDishes:{
+                                dishes: [...order.orderDishes.dishes, orderItems[i].dish_id],
+                                quantities: [ ...order.orderDishes.quantities, orderItems[i].quantity] 
+                                }
+                            } 
+                    }                    
+                }
+                return order
+            })
+            return res.json(orderWithItems)
         }    
     }
 }

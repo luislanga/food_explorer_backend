@@ -9,7 +9,7 @@ const dishesController = new DishesController()
 const dishesImageController = new DishesImageController()
 
 const dishesRoutes = Router()
-const upload = multer(uploadConfig.MULTER);
+const upload = multer(uploadConfig.MULTER); 
 
 dishesRoutes.get('/',dishesController.index)
 dishesRoutes.patch('/:dish_id/image', upload.single("image"), dishesImageController.update)

@@ -3,9 +3,6 @@ const connection = require('../database/knex')
 const knexfile = require('../../knexfile');
 const knex = require('knex')(knexfile.development);
 
-//fazer tratativa de erros
-//adicionar/editar imagem
-
 class DishesController {
     async create(req, res) {
         const {user_id} = req.params
@@ -58,8 +55,6 @@ class DishesController {
                 user_id,
                 updated_at: date
             })
-
-            console.log(ingredients)
 
             await connection('ingredients').where({dish_id}).delete()
             await connection('categories').where({dish_id}).delete()
