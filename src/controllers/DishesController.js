@@ -18,9 +18,12 @@ class DishesController {
                 user_id
             })
 
+            console.log(dish_id[0])
+            
+
             const categoriesInsert = categories.map(category => {
                 return {
-                    dish_id,
+                    dish_id: dish_id[0],
                     name: category
                 }
             })
