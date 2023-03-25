@@ -11,19 +11,19 @@ class DishesController {
         if(currentUser.is_admin ===1 ){
             const {name, description, price, ingredients, categories} = req.body
 
-            const dish_id = await connection('dishes').insert({
+            const data = await connection('dishes').insert({
                 name, 
                 description, 
                 price, 
                 user_id
             })
 
-            console.log(dish_id[0])
+            const [dish_id] = data
             
 
             const categoriesInsert = categories.map(category => {
                 return {
-                    dish_id: dish_id[0],
+                    dish_id,
                     name: category
                 }
             })
