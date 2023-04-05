@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const multer = require("multer")
-const uploadConfig = require("../config/upload")
+const uploadConfig = require("../config/upload") 
 
 const DishesController = require('../controllers/DishesController')
 const DishesImageController = require('../controllers/DishesImageController')
@@ -17,6 +17,6 @@ dishesRoutes.patch('/:user_id/:id',dishesController.update)
 dishesRoutes.post('/:user_id',dishesController.create)
 dishesRoutes.get('/:id',dishesController.show)
 dishesRoutes.delete('/:user_id/:id',dishesController.delete)
-
+//
 
 module.exports = dishesRoutes
